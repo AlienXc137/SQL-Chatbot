@@ -25,7 +25,7 @@ Install the required packages:
 pip install -r requirements.txt
 ```
 
-Create your own .env file with the necessary variables, including your OpenAI API key:
+Create your own .env file with the necessary variables, including your GOOGLE GEMINI API key:
 
 ```bash
 GOOGLE_API_KEY=[your-GOOGLE_GEMINI-api-key]
