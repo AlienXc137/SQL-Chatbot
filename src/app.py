@@ -48,6 +48,38 @@ def get_sql_chain(db):
         | StrOutputParser()
     )
 
+def get_response(user_query: str, chat_history: list, db: SQLDatabase):
+    sql_chain=get_sql_chain(db)
+
+    temmplate = """
+    You are a data analyst at a company. You are interacting with a user who is asking you questions about the company's database.
+    Based on the table schema below, question, sql query, and sql response, write a natural language response.
+    <SCHEMA>{schema}</SCHEMA>
+
+    Conversation History: {chat_history}
+    SQL Query: <SQL>{query}</SQL>
+    User question: {question}
+    SQL Response: {response}"""
+
+    prompt = ChatPromptTemplate.from_template(temmplate)
+    llm = GoogleGenerativeAI(model="gemini-2.5-flash")
+    chain=(
+        RunnablePassthrough.assign(query=sql_chain).assign( #get sql query from sql chain
+            schema=lambda _: db.get_table_info(), #get schema from db
+            response= lambda vars: db.run(vars["query"]) #run sql query on db to get response
+        )
+        | prompt
+        | llm
+        | StrOutputParser()
+    )
+
+    return chain.invoke({
+        "chat_history": chat_history,
+        "question": user_query
+    })
+
+
+
 
 if "chat_history" not in st.session_state: #initialize chat history in session state
     st.session_state.chat_history = [ 
@@ -101,10 +133,7 @@ if user_query is not None and user_query.strip() != "": #check if user input is 
     
     with st.chat_message("AI"): #display AI message
         sql_chain=get_sql_chain(st.session_state.db) #get SQL chain with db from session state
-        response = sql_chain.invoke({
-            "chat_history": st.session_state.chat_history,
-            "question": user_query
-        })
+        response = get_response(user_query, st.session_state.chat_history, st.session_state.db) #get response from AI
         st.markdown(response)
     
     st.session_state.chat_history.append(AIMessage(content=response)) #append AI message to chat history
