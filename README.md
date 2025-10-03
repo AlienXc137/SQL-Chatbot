@@ -1,6 +1,6 @@
 # MySQL Chatbot with Google Gemini
 
-A natural language SQL chatbot using Google Gemini that can interpret natural language queries, generate SQL queries, and fetch results from a SQL database, all in an intuitive and user-friendly way. It utilizes the power of Gemini 2.5 flash model, integrated with a Streamlit GUI for an enhanced interaction experience.
+A natural language SQL chatbot powered by Google Gemini 2.5 Flash that interprets user queries, generates SQL statements, executes them on a connected SQL database, and returns results in plain English. It leverages LangChain for query orchestration, FastAPI to expose clean REST endpoints, and a Gradio-based UI for an intuitive chat experience. This seamless integration makes querying financial data simple, interactive, and user-friendly.
 
 ## Features
 - **Natural Language Processing**: Uses Gemini 2.5 flash model to interpret and respond to user queries in natural language.
@@ -8,15 +8,22 @@ A natural language SQL chatbot using Google Gemini that can interpret natural la
 - **Database Interaction**: Connects to a SQL database to retrieve query results, demonstrating practical database interaction.
 - **Streamlit GUI**: Features a user-friendly interface built with Streamlit, making it easy for users of all skill levels.
 
+- Ask questions in **natural language** and get response in natural language
+- Generate **SQL queries** using LangChain + Gemini 2.5 flash model
+- Execute queries on **MySQL**  
+- Return **formatted answers** with SQL Query  
+- REST API via **FastAPI**  
+- Chat UI via **Gradio** 
+
 ## Brief Explanation of How the Chatbot Works
-The chatbot works by taking a user's natural language query, converting it into a SQL query using Gemini 2.5 flash model, executing the query on a SQL database, and then presenting the results back to the user in natural language. This process involves several steps of data processing and interaction with the Google Gemini API and a SQL database, all seamlessly integrated into a Streamlit application.
+The chatbot works by taking a user’s finance-related natural language question and converting it into a SQL query using the Gemini 2.5 Flash model through LangChain. The generated SQL is then executed on a connected MySQL finance database, retrieving accurate results. These results are processed and converted into a natural language explanation for better clarity. The system is exposed via a FastAPI backend with REST endpoints (`/ask`, `/health`) and a Gradio chat UI that displays both the SQL query and the answer in a Hugging Face–style interface. This modular design ensures a seamless integration between the LLM, database, API, and UI while keeping the workflow transparent and user friendly.
 
 ## Installation
 Ensure you have Python installed on your machine. Then clone this repository:
 
 ```bash
-git clone [repository-link]
-cd [repository-directory]
+git clone https://github.com/AlienXc137/SQL-Chatbot.git
+cd SQL-Chatbot
 ```
 
 Install the required packages:
@@ -29,12 +36,23 @@ Create your own .env file with the necessary variables, including your GOOGLE GE
 
 ```bash
 GOOGLE_API_KEY= [your-GOOGLE-GEMINI-api-key]
-SQL_PASSWORD = [SQL-Password]
+SQL_USER=root
+SQL_PASSWORD= [your-MySQL-password]
+SQL_HOST=localhost
+SQL_PORT=3306
+SQL_DATABASE=finance_db
 ```
 
 ## Usage
-To launch the Streamlit app and interact with the chatbot:
+To launch the app and interact with the chatbot:
 
 ```bash
-streamlit run app.py
+uvicorn src.main:app
 ```
+
+## Api Endpoints
+API runs at : http://127.0.0.1:8000
+
+Gradio UI runs at : http://127.0.0.1:8000/ui
+
+Test API at SwaggerApi : http://127.0.0.1:8000/docs
