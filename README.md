@@ -3,11 +3,6 @@
 A natural language SQL chatbot powered by Google Gemini 2.5 Flash that interprets user queries, generates SQL statements, executes them on a connected SQL database, and returns results in plain English. It leverages LangChain for query orchestration, FastAPI to expose clean REST endpoints, and a Gradio-based UI for an intuitive chat experience. This seamless integration makes querying financial data simple, interactive, and user-friendly.
 
 ## Features
-- **Natural Language Processing**: Uses Gemini 2.5 flash model to interpret and respond to user queries in natural language.
-- **SQL Query Generation**: Dynamically generates SQL queries based on the user's natural language input.
-- **Database Interaction**: Connects to a SQL database to retrieve query results, demonstrating practical database interaction.
-- **Streamlit GUI**: Features a user-friendly interface built with Streamlit, making it easy for users of all skill levels.
-
 - Ask questions in **natural language** and get response in natural language
 - Generate **SQL queries** using LangChain + Gemini 2.5 flash model
 - Execute queries on **MySQL**  
