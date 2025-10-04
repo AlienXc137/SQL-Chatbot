@@ -11,3 +11,4 @@ fastapi
 uvicorn 
 pydantic
 gradio
+psycopg2-binary
