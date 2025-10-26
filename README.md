@@ -1,5 +1,7 @@
 # MySQL Chatbot with Google Gemini
 
+### Demo Video: https://www.youtube.com/watch?v=c1TsDsRsPYA
+
 A natural language SQL chatbot powered by Google Gemini 2.5 Flash that interprets user queries, generates SQL statements, executes them on a connected SQL database, and returns results in plain English. It leverages LangChain for query orchestration, FastAPI to expose clean REST endpoints, and a Gradio-based UI for an intuitive chat experience. This seamless integration makes querying financial data simple, interactive, and user-friendly.
 
 ## Features
